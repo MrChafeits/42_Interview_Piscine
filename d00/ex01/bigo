@@ -1,0 +1,4 @@
+O(n log(n)) average time complexity, n being number of elements.
+ - Usual O(n^2) worst case for quicksort is avoided by using Hoare's
+   partition scheme
+O(n log(n)) space complexity, n being number of elements
