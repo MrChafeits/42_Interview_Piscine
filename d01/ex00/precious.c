@@ -2,6 +2,7 @@
 #include <string.h>
 #include "header.h"
 
+#include <stdio.h>
 t_node *node_create(char c)
 {
 	t_node *new;
@@ -9,8 +10,8 @@ t_node *node_create(char c)
 	new = malloc(sizeof(*new));
 	if (new == 0)
 		return 0;
-	new->prev = new->next = new;
 	new->c = c;
+	new->prev = new->next = new;
 	return new;
 }
 
@@ -28,14 +29,15 @@ t_node *construct_ring(void)
 		} else {
 			last = ring->prev;
 			tmp->next = ring;
+			ring->prev = tmp;
 			tmp->prev = last;
 			last->next = tmp;
 		}
+		/* printf("construct tmp[%d](%c)\n", i, tmp->c); */
 	}
 	return ring;
 }
 
-#include <stdio.h>
 char *precious(int *text, int size)
 {
 	t_node *a, *b, *tmp;
@@ -48,8 +50,9 @@ char *precious(int *text, int size)
 	a = construct_ring();
 	b = construct_ring();
 	len = strlen(CS);
+	tmp = a;
 	for (i = 0; i < len; i++) {
-		printf("tmp[%d](%c)\n", i, tmp->c);
+		printf("precious tmp[%d](%c)\n", i, tmp->c);
 		tmp = tmp->next;
 	}
 	for (i = 0; i < size; i++) {

@@ -22,11 +22,11 @@ int main(int ac, char **av)
 	/*-------------------
 	launch your test here
 	--------------------*/
-	// printf("%s\n", precious(input, size));
+
+	printf("%s\n", precious(input, size));
+
 	return (0);
 }
-
-
 
 // Function used for the test
 // Don't go further :)
