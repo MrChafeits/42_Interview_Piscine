@@ -1,14 +1,31 @@
-#ifndef _HEADER_H_
-#define _HEADER_H_
+#ifndef HEADER_H
+# define HEADER_H
 
-#define CS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 !?:;,.$&<>()+*-_="
+/*--------------------------------
+  !! required
+  --------------------------------*/
+# define CS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 !?:;,.$&<>()+*-_="
 
-typedef struct s_list t_list;
-struct s_list {
-	t_list *next, *prev;
-	int c;
+typedef struct s_node t_node;
+struct s_node {
+	char c;
+	struct s_node *prev;
+	struct s_node *next;
 };
 
+/*--------------------------------
+  :) function you must implement
+  --------------------------------*/
 char *precious(int *text, int size);
 
-#endif /* _HEADER_H_ */
+/*--------------------------------
+  ?? test function used in main
+  --------------------------------*/
+
+
+/*--------------------------------
+  &  your own other function
+  --------------------------------*/
+
+
+#endif

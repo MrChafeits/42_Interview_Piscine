@@ -1,2 +1,2 @@
-O(log n) time, n being the number of elements in the array
-O(1) space
+O(log(n)) time complexity, n being the number of elements in the array
+O(1) space complexity, for the existing array

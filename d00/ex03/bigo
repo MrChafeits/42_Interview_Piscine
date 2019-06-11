@@ -1,2 +1,2 @@
-O(1) time for searching
-O(n) space for constructing
+O(1) time complexity, for searching the hash table
+O(n) space complexity, for constructing the hash table

@@ -1,2 +1,8 @@
-O(n+m), where 'n' is length of search string and 'm' is the combined length of the pattern strings
-O(p), where 'p' is the number of pattern strings
+O(n+m) best case time complexity,
+       where 'n' is length of search string and 'm' is the combined length of the pattern strings
+
+O(nm) worst case time complexity,
+      where 'n' is length of search string and 'm' is the combined length of the pattern strings
+
+O(p) space complexity,
+     where 'p' is the number of pattern strings

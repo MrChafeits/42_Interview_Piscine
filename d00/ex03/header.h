@@ -1,31 +1,55 @@
-#ifndef _HEADER_H_
-#define _HEADER_H_
+#ifndef HEADER_H
+# define HEADER_H
 
-#include <unistd.h> /* for `size_t' */
+#include <stdlib.h>
 
-typedef struct s_art t_art;
-struct s_art {
-	char *name;
-	int price;
+/*--------------------------------
+  !! required structure
+  --------------------------------*/
+
+struct  s_art {
+  char *name;
+  int  price;
 };
 
-typedef struct s_item t_item;
 struct s_item {
-	char *key; /* Name of the piece */
-	t_art *value;
-	t_item *next;
+  char           *key; //here the key will be the name
+  struct s_art   *value;
+  struct s_item  *next;
 };
 
-typedef struct s_dict t_dict;
 struct s_dict {
-	t_item **items;
-	int capacity; /* Currently allocated size of `items' */
+  struct s_item **items;
+  int           capacity; //the capacity of the array 'items'
 };
 
-size_t hash(char *input);
-t_dict *dictInit(int capacity);
-int dictInsert(t_dict *dict, char *key, t_art *value);
-t_art *dictSearch(t_dict *dict, char *key);
-int searchPrice(t_dict *dict, char *name);
+/*--------------------------------
+  :) function you must implement
+  --------------------------------*/
 
-#endif /* _HEADER_H_ */
+// DICTIONNARY
+
+size_t hash(char *input); //return hash result
+
+struct s_dict *dictInit(int capacity); //initialize the dictionary, given as parameter the capacity of the array.
+int	dictInsert(struct s_dict *dict, char *key, struct s_art *value); //add one element in the dictionary, if FAIL return 0, otherwise 1
+struct s_art *dictSearch(struct s_dict *dict, char *key); //find one element in the dictionnary, if not found, return NULL
+
+// OTHER
+
+int searchPrice(struct s_dict *dict, char *name);
+
+
+/*--------------------------------
+  ?? test function used in main 
+  --------------------------------*/
+
+struct s_art **getArts(void);
+
+
+/*--------------------------------
+  &  your own other function
+  --------------------------------*/
+
+
+#endif

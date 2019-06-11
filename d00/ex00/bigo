@@ -1,2 +1,2 @@
-O(n) time, n being the number of elements in the array
-O(1) space for the array
+O(n) average time complexity, n being the number of elements in the array
+O(1) space complexity, for the existing array

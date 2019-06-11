@@ -1,12 +1,33 @@
-#ifndef _HEADER_H_
-#define _HEADER_H_
+#ifndef HEADER_H
+# define HEADER_H
 
-typedef struct s_art t_art;
-struct s_art {
-	char *name;
-	int price;
+/*--------------------------------
+  !! required structure
+--------------------------------*/
+
+struct  s_art {
+    char *name;
+    int price;
 };
 
-int		searchPrice(struct s_art **arts, char *name);
 
-#endif /* _HEADER_H_ */
+/*--------------------------------
+  :) function you must implement
+--------------------------------*/
+
+int  searchPrice(struct s_art **arts, char *name);
+
+
+/*--------------------------------
+  ?? test function used in main 
+--------------------------------*/
+
+struct s_art		**getArts(void);
+
+
+/*--------------------------------
+  &  your own other function
+--------------------------------*/
+
+
+#endif

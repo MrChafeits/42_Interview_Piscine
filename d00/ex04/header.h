@@ -1,6 +1,28 @@
-#ifndef _HEADER_H_
-#define _HEADER_H_
+#ifndef HEADER_H
+# define HEADER_H
 
-int		howManyJesus(char *bible, char *jesus);
+/*--------------------------------
+  !! required structure
+  --------------------------------*/
 
-#endif /* _HEADER_H_ */
+
+/*--------------------------------
+  :) function you must implement
+  --------------------------------*/
+
+int howManyJesus(char *bible, char *jesus);
+
+
+/*--------------------------------
+  ?? test function used in main 
+  --------------------------------*/
+
+char *readFile(void);
+
+
+/*--------------------------------
+  &  your own other function
+  --------------------------------*/
+
+
+#endif

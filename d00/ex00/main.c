@@ -1,154 +1,164 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/mman.h>
+#include <stdio.h> //printf, scanf, ...
+#include <string.h> //memcpy, strlen, ...
+#include <unistd.h> //fork, write, sleep...
+#include <stdlib.h> //malloc, free, exit...
 
 #include "header.h"
 
+int main(void)
+{
+	struct s_art **arts;
+
+	arts = getArts(); //parsing the file and put it in an array
+
+	/*-------------------
+	launch your test here
+	--------------------*/
+	printf("price for the art \'%s\' is %d\n", "Guernica", searchPrice(arts, "Guernica"));
+	printf("price for the art \'%s\' is %d\n", "Mona Lisa", searchPrice(arts, "Mona Lisa"));
+	printf("price for the art \'%s\' is %d\n", "Tape Measure", searchPrice(arts, "Tape Measure"));
+	printf("price for the art \'%s\' is %d\n", "", searchPrice(arts, ""));
+
+	return (0);
+}
+
+//don't go further :)
+
 #define FILENAME "art.txt"
 
-char	*read_file(void)
+char	*readFile(void)
 {
-	char *buf = NULL;
-	FILE *fp = NULL;
-	long size = 0;
+	char *fcontent = NULL;
+	int size = 0;
+	FILE *fp;
 
-	fp = fopen(FILENAME, "r");
-	if (fp == NULL) return NULL;
+	if (NULL == (fp = fopen(FILENAME, "r")))
+		return (NULL);
 	fseek(fp, 0L, SEEK_END);
 	size = ftell(fp);
 	rewind(fp);
-	buf = malloc((size + 1) * sizeof(*buf));
-	if (buf == NULL) return NULL;
-	fread(buf, 1, size, fp);
+	if (NULL == (fcontent = malloc(sizeof(char) * (size + 1))))
+		return (NULL);
+	fread(fcontent, 1, size, fp);
 	fclose(fp);
-	return buf;
+	return (fcontent);
 }
 
-char	**split(char *str, char *del)
-{
-	char **r;
-	int a = 0, pos = 0, count = 0, ldel = strlen(del), lsub = 0;
-	register int i;
+char	**split(char *str, char *delimiter){
+	char **tab;
+	int count;
+	int a;
+	int pos;
+	int len_delimiter;
+	int len_substring;
 
-	for (i = 0; str[i]; ++i) {
-		if (strncmp(str + i, del, ldel) == 0) {
-			if (lsub > 0) {
-				lsub = 0;
-				count++;
+	len_delimiter = strlen(delimiter);
+	len_substring = 0;
+	count = 0;
+	//first counting the number of substring
+	for (int i = 0; str[i]; i++){
+		if (strncmp(str + i, delimiter, len_delimiter) == 0) {
+			if (len_substring > 0){
+				len_substring = 0;
+				count += 1;
 			}
-			i = i + ldel - 1;
+			i += len_delimiter - 1;
 		} else {
-			lsub++;
+			len_substring += 1;
 		}
 	}
-	if (lsub > 0)
-		count++;
-	r = malloc((count + 1) * sizeof(*r));
-	if (r == NULL) return NULL;
-	*r = NULL;
-	lsub = 0;
-	for (i = 0; str[i]; i++) {
-		if (strncmp(str + i, del, ldel) == 0) {
-			if (lsub > 0) {
-				r[a] = strndup(str + pos, lsub);
-				a++;
-				lsub = 0;
+	if (len_substring > 0){
+		count += 1;
+	}
+	if (NULL == (tab = malloc(sizeof(char *) * (count + 1))))
+		return (NULL);
+	tab[(a = 0)] = NULL;
+	len_substring = 0;
+	pos = 0;
+	//then get the substring :)
+	for (int i = 0; str[i]; i++){
+		if (strncmp(str + i, delimiter, len_delimiter) == 0) {
+			if (len_substring > 0){
+				tab[(a++)] = strndup(str + pos, len_substring);
+				len_substring = 0;
 			}
-			i = i + ldel - 1;
+			i += len_delimiter - 1;
 			pos = i + 1;
 		} else {
-			lsub++;
+			len_substring += 1;
 		}
 	}
-	if (lsub > 0) {
-		r[a] = strndup(str + pos, lsub);
-		a++;
+	if (len_substring > 0){
+		tab[(a++)] = strndup(str + pos, len_substring);
 	}
-	r[a] = NULL;
-	return r;
+	tab[a] = NULL;
+	return (tab);
 }
 
-struct s_art *init_struct(char *l)
-{
-	struct s_art *p = NULL;
-	char **arr = NULL;
-	int i;
+void	getArts_leave(void){
+	dprintf(STDERR_FILENO, "failed to load the file.\n");
+	exit(0);
+}
 
-	p = malloc(sizeof(*p));
-	if (p == NULL)
-		return NULL;
-	arr = split(l, " => ");
-	if (arr == NULL)
-		return NULL;
-	if (*arr != NULL)
-		p->name = strdup(*arr);
+struct s_art *getArts_createStruct( char *line ){
+	struct s_art *piece;
+	char **tab;
+
+	if (NULL == (piece = malloc(sizeof(struct s_art))))
+		return (NULL);
+	if (NULL == (tab = split(line, " => ")))
+		return (NULL);
+	if (tab[0] != NULL)
+		piece->name = strdup(tab[0]);
 	else
-		return NULL;
-	if (arr[1] != NULL)
-		p->price = atoi(arr[1]);
+		return (NULL);
+	if (tab[1] != NULL)
+		piece->price = atoi(tab[1]);
 	else
-		return NULL;
-	for (i = 0; arr[i] != NULL; i++)
-		free(arr[i]);
-	free(arr);
-	return p;
-}
+		return (NULL);
 
-void panic(const char *msg)
-{
-	if (msg)
-		puts(msg);
-	exit(EXIT_FAILURE);
-}
-
-struct s_art **parse_file(void)
-{
-	char *buf, **tab;
-	struct s_art **arr, *temp;
-	int size, idx;
-	register int i;
-
-	puts("loading file...");
-	buf = read_file();
-	if (buf == NULL)
-		panic("Fatal error: failed to read file.");
-	size = 0;
-	for (i = 0; buf[i] != 0; i++)
-		if (buf[i] == '\n')
-			size++;
-	arr = malloc((size + 1) * sizeof(*arr));
-	if (arr == NULL)
-		panic("Fatal error: failed to allocate memory for arr.");
-	idx = 0;
-	*arr = NULL;
-	tab = split(buf, "\n");
-	for (i = 0; tab[i] != NULL; i++) {
-		temp = init_struct(strdup(tab[i]));
-		if (temp) {
-			arr[idx] = temp;
-			idx++;
-		}
-	}
-	arr[idx] = NULL;
-	for (i = 0; tab[i] != NULL; i++)
+	for (int i = 0; tab[i] ; i++){
 		free(tab[i]);
-	free(tab);
-	puts("Done");
-	return arr;
+	} free(tab);
+
+	return (piece);
 }
 
-int		main(int argc, char *argv[])
+struct s_art **getArts(void)
 {
-	struct s_art **arts;
-	char *name;
+	char *file;
+	struct s_art **art;
+	int art_size;
+	int	art_index;
 
-	if (argc == 2)
-		name = argv[1];
-	else
-		name = "Guernica";
-	arts = parse_file();
-	printf("price for \"%s\" is %d\n", name, searchPrice(arts, name));
-	return 0;
+	dprintf(STDOUT_FILENO, "loading the file... ");
+	if (NULL == (file = readFile()))
+		getArts_leave();
+
+	//creating the array
+	art_size = 0;
+	for (int i = 0; file[i]; i++){
+		if (file[i] == '\n')
+			art_size += 1;
+	}
+	if (NULL == (art = malloc(sizeof(struct s_art *) * (art_size + 1))))
+		getArts_leave();
+	art[(art_index = 0)] = NULL;
+
+	//filling the array
+	char **tab = split(file, "\n");
+	struct s_art *tmp;
+	for(int i = 0; tab[i]; i++){
+		tmp = getArts_createStruct(strdup(tab[i]));
+		if (tmp)
+			art[(art_index++)] = tmp;
+	}
+	art[(art_index)] = NULL;
+
+	for (int i = 0; tab[i] ; i++){
+		free(tab[i]);
+	} free(tab);
+
+	dprintf(STDOUT_FILENO, "finish!\n");
+	return (art);
 }

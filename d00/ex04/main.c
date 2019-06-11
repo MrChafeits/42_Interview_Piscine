@@ -1,50 +1,59 @@
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include <stdio.h> //printf, scanf, ...
+#include <string.h> //memcpy, strlen, ...
+#include <unistd.h> //fork, write, sleep...
+#include <stdlib.h> //malloc, free, exit...
 
 #include "header.h"
-
-#define FILENAME "book.txt"
-
-void	panic(char *msg){
-	if (msg)
-		puts(msg);
-	exit(EXIT_FAILURE);
-}
-
-char	*readFile(void)
-{
-	char *buf = NULL;
-	int size = 0;
-	FILE *fp;
-
-	puts("Reading file...");
-	fp = fopen(FILENAME, "r");
-	if (fp == 0)
-		panic("Fatal error: unable to open file");
-	fseek(fp, 0L, SEEK_END);
-	size = ftell(fp);
-	rewind(fp);
-	buf = malloc(sizeof(char) * (size + 1));
-	if (buf == 0)
-		panic("Fatal error: unable to allocate space for file contents");
-	fread(buf, 1, size, fp);
-	fclose(fp);
-	puts("Done");
-	return (buf);
-}
 
 int main(int argc, char *argv[])
 {
 	char *book;
+
+	//getting the file
+	book = readFile();
+
+	/*-------------------
+	launch your test here
+	--------------------*/
 	char *word;
 
 	if (argc == 2)
 		word = argv[1];
 	else
-		word = "jesus";
-	book = readFile();
-	printf("Total occurrances of \'%s\': %d\n", word, howManyJesus(book, word));
-	return 0;
+		word = "God";
+	printf("howManyJesus(book, \'%s\') = %d\n", word, howManyJesus(book, word));
+
+	return (0);
+}
+
+
+
+// Function used for the test
+// Don't go further :)
+
+#define FILENAME "book.txt"
+
+void	leave(void){
+	dprintf(STDERR_FILENO, "failed to load the file.\n");
+	exit(0);
+}
+
+char	*readFile(void)
+{
+	char *fcontent = NULL;
+	int size = 0;
+	FILE *fp;
+
+	printf("Loading the file... ");
+	if (NULL == (fp = fopen(FILENAME, "r")))
+		leave();
+	fseek(fp, 0L, SEEK_END);
+	size = ftell(fp);
+	rewind(fp);
+	if (NULL == (fcontent = malloc(sizeof(char) * (size + 1))))
+		leave();
+	fread(fcontent, 1, size, fp);
+	fclose(fp);
+	printf("finish!\n");
+	return (fcontent);
 }
