@@ -1,0 +1,3 @@
+O(n) time complexity, where n is the number of nodes in the list
+
+O(n) space complexity, where n is the number of nodes in the list

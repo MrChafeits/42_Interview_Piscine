@@ -1,0 +1,3 @@
+O(1) time complexity, as a queue is FIFO (first in, first out)
+
+O(2) space complexity, where n is the number of nodes in the queue

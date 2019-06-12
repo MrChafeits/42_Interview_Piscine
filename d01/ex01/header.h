@@ -1,12 +1,12 @@
 #ifndef HEADER_H
-# define HEADER_H
+#define HEADER_H
 
 /*--------------------------------
   !! required structure
   --------------------------------*/
 struct s_node {
-	char          *word;
-	struct s_node *next;
+  char *word;
+  struct s_node *next;
 };
 
 /*--------------------------------
@@ -15,13 +15,12 @@ struct s_node {
 void printReverse(struct s_node *lst);
 
 /*--------------------------------
-  ?? test function used in main 
+  ?? test function used in main
   --------------------------------*/
 struct s_node *createList(char **words, int n);
 
 /*--------------------------------
   &  your own other function
   --------------------------------*/
-
 
 #endif

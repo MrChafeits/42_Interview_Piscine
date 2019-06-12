@@ -1,0 +1,3 @@
+O(n) time complexity, where n is the number of nodes in the linked list
+O(n) space complexity, where n is the number of nodes in the linked list
+     due to new stack frames being created for each node traversed

@@ -1,16 +1,16 @@
 #ifndef HEADER_H
-# define HEADER_H
+#define HEADER_H
 
 /*--------------------------------
   !! required structure
   --------------------------------*/
 struct s_item {
-	int idx;
-	struct s_item *next;
+  int idx;
+  struct s_item *next;
 };
 
 struct s_stack {
-	struct s_item *item;
+  struct s_item *item;
 };
 
 /*--------------------------------
@@ -26,10 +26,8 @@ char *console(void);
   ?? test function used in main
   --------------------------------*/
 
-
 /*--------------------------------
   &  your own other function
   --------------------------------*/
-
 
 #endif
