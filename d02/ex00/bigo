@@ -1,0 +1,9 @@
+Where n is the number of nodes in the list:
+
+O(n log(n)) worst case time complexity
+
+O(n log(n)) best case time complexity
+
+O(n log(n)) average case time complexity
+
+O(1) worst case space complexity
