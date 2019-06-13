@@ -2,6 +2,7 @@
 #include <string.h> //memcpy, strlen, ...
 #include <unistd.h> //fork, write, sleep...
 #include <stdlib.h> //malloc, free, exit...
+#include <time.h>
 
 #include "header.h"
 
@@ -23,10 +24,22 @@ int main(int ac, char **av)
 	launch your test here
 	--------------------*/
 
-	// sortCriminals(criminals);
-	// info = getInfo(av[1]);
-	// potentialCriminals = findPotentialCriminals(criminals, info);
-	// printCriminals(potentialCriminals);
+	sortCriminals(criminals);
+	info = getInfo(av[1]);
+	/* fprintf(stderr, "av[1](%s)\n", av[1]); */
+	/* fprintf(stderr, "info (%d%d%d%d%d%d%d)\n", */
+	/* 		info->gender, */
+	/* 		info->height, */
+	/* 		info->hairColor, */
+	/* 		info->eyeColor, */
+	/* 		info->glasses, */
+	/* 		info->tattoo, */
+	/* 		info->piercing); */
+	potentialCriminals = findPotentialCriminals(criminals, info);
+	if (potentialCriminals)
+		printCriminals(potentialCriminals);
+	else
+		puts("could not find match");
 
 	return (0);
 }
@@ -72,12 +85,15 @@ void printCriminals(struct s_criminal **criminals) {
 }
 
 struct s_info *getInfo(char *description) {
-	int *info;
+	int *info, tmp, i;
 
-	if(!(info = (int *)malloc(sizeof(struct s_info))))
+	if(!(info = malloc(sizeof(struct s_info))))
 		return (NULL);
-	for (int i = 0; description[i]; i++) {
-		info[i] = description[i] - '0';
+	bzero(info, sizeof(struct s_info));
+	tmp = atoi(description);
+	for (i = 6; i >= 0; i--) {
+		info[i] = (tmp % 10);
+		tmp /= 10;
 	}
 	return ((struct s_info *)info);
 }

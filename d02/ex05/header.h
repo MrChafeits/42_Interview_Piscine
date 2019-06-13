@@ -8,6 +8,7 @@
 /*--------------------------------
   :) function you must implement
   --------------------------------*/
+int depth;
 int	searchShifted(int *rocks, int length, int value);
 
 /*--------------------------------

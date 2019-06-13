@@ -1,0 +1,8 @@
+Where n is the number of elements in the array,
+and k is the range of non-negative key values:
+
+Performance:
+	Worst case - O(n + k)
+
+Space Complexity:
+	Worst case - O(n + k)

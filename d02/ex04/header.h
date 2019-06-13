@@ -16,7 +16,7 @@ void countSort(unsigned char *utensils, int n);
   ?? test function used in main
   --------------------------------*/
 unsigned char *genRandomUstensils(int *n);
-void printUtensils(unsigned char *utensils, int n);
+void printUtensils(unsigned char *utensils, int n, int verbose);
 
 /*--------------------------------
   &  your own other function

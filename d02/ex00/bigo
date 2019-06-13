@@ -1,9 +1,11 @@
 Where n is the number of nodes in the list:
 
-O(n log(n)) worst case time complexity
+Performance:
+	Worst case - O(n log n)
+	Best case  - O(n log n)
+	Avg case   - O(n log n)
 
-O(n log(n)) best case time complexity
+Space Complexity:
+	Worst case - O(n) total with O(1) auxiliary
 
-O(n log(n)) average case time complexity
-
-O(1) worst case space complexity
+(auxiliary space is the temporary space used by the algorithm)

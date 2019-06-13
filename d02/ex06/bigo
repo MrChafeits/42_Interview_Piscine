@@ -1,0 +1,8 @@
+Where w is the number of bits required to store each key and,
+n is the number of elements in the array:
+
+Performance:
+	Worst case - O(w * n)
+
+Space Complexity:
+	Worst case - O(w + n)

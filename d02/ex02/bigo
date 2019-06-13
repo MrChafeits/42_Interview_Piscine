@@ -1,0 +1,9 @@
+Where n is the number of elements in the array:
+
+Performance:
+	Worst case - O(n log n)?
+	Best case  - O(n log n)
+	Avg case   - O(n log n)
+
+Space Complexity:
+	Worst case - O(n) auxiliary

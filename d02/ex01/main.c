@@ -6,32 +6,98 @@
 
 #include "header.h"
 
+int numWidth(int n);
+int length(struct s_player **arr);
+int nameWidth(struct s_player **arr);
+int scoreWidth(struct s_player **arr);
+int is_sorted(struct s_player **arr);
+
 int main(void)
 {
 	struct s_player **players;
 
-	players = genRandomPlayers(30); //if param == 0, the length of the list will be random between 1 and 1.000
+	players = genRandomPlayers(0);
+	//if param == 0, the length of the list will be random between 1 and 1.000
 
 	/*-------------------
 	launch your test here
 	--------------------*/
-	printPlayers(players);
-	//printf("doing the insertion sort...\n");
-	//insertionSort(players);
-	//printPlayers(players);
+	printf("length(%d)\n", length(players));
+	printf("is_sorted(%d)\n", is_sorted(players));
+	/* printPlayers(players); */
+
+	puts("doing the insertion sort...");
+	insertionSort(players);
+	printf("is_sorted(%d)\n", is_sorted(players));
+	/* printPlayers(players); */
 
 	return (0);
 }
 
+int is_sorted(struct s_player **arr)
+{
+	register int i;
+
+	for (i = 1; arr[i] != 0; i++)
+		if (arr[i-1]->score < arr[i]->score)
+			return 0;
+	return 1;
+}
+
+int numWidth(int n)
+{
+	register int ret, i;
+
+	for (i = ret = 1; i < n; i *= 10, ret++);
+	return ret;
+}
+
+int scoreWidth(struct s_player **arr)
+{
+	register int ret, tmp, i;
+
+	for (ret = tmp =i = 0; arr[i] != 0; i++) {
+		tmp = numWidth(arr[i]->score);
+		ret = (ret < tmp ? tmp : ret);
+	}
+	return ret;
+}
+
+int nameWidth(struct s_player **arr)
+{
+	register int ret, tmp, i;
+
+	for (ret = tmp = i = 0; arr[i] != 0; i++) {
+		tmp = strlen(arr[i]->name);
+		ret = (tmp > ret ? tmp : ret);
+	}
+	return ret;
+}
+
+int length(struct s_player **arr)
+{
+	register int i;
+
+	for (i = 0; arr[i] != 0; i++);
+	return i;
+}
 
 // Function used for the test
 // Don't go further :)
 
 void printPlayers(struct s_player **players)
 {
+	int fw1, fw2, fw3;
+
+	fw1 = numWidth(length(players));
+	fw2 = nameWidth(players);
+	fw3 = scoreWidth(players);
 	printf("⭐  LEADER BOARD ⭐ \n");
 	for (int i = 0; players[i]; i++) {
-		printf("%d: %s with %d\n", i + 1, players[i]->name, players[i]->score);
+		printf("%*d: %*s with %*d\n",
+				fw1, i + 1,
+				fw2, players[i]->name,
+				fw3, players[i]->score);
 	}
 }
 

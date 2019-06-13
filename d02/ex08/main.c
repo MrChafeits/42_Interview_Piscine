@@ -14,8 +14,8 @@ int main(void)
 	launch your test here
 	--------------------*/
 
-	// externalSort(SCOREFILE, SORTEDFILE, 8000);
-	// printf("The file %s is%s sorted\n", SORTEDFILE, (fileIsSorted(SORTEDFILE)) ? "" : " NOT");
+	externalSort(SCOREFILE, SORTEDFILE, 8000);
+	printf("The file %s is%s sorted\n", SORTEDFILE, (fileIsSorted(SORTEDFILE)) ? "" : " NOT");
 
 	return (0);
 }

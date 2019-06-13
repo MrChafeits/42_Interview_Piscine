@@ -1,0 +1,11 @@
+Where n is the number of elements in the array:
+
+Performance:
+	Worst case - O(n^2) comparisons and swaps
+	Best case  - O(n) comparisons, O(1) swaps
+	Avg case   - O(n^2) comparisons and swaps
+
+Space complexity:
+	Worst case - O(n) total, and O(1) auxiliary
+
+(auxiliary space is the temporary space used by the algorithm)

@@ -20,7 +20,7 @@ int main(void)
 	--------------------*/
 
 	printArray(ages, n);
-	// printYoungest(ages, n);
+	printYoungest(ages, n);
 
 	return (0);
 }
