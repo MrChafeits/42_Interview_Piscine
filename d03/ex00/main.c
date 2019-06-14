@@ -12,14 +12,14 @@ int main(void)
 	struct s_info info;
 
 	memset(&info, 0, sizeof(struct s_info));
-	root = genRandomBinaryTree(time(NULL));
+	root = genRandomBinaryTree((unsigned)time(NULL) + (unsigned)clock());
 	printBinaryTree(root);
 
         /*-------------------
         launch your test here
         --------------------*/
-	// info = getInfo(root);
-	// printTreeInfo(info);
+	info = getInfo(root);
+	printTreeInfo(info);
 
 	return (0);
 }
@@ -52,10 +52,10 @@ struct s_node *createRandomNode(int currentDepth, int maxDepth){
 	node->value = rand() % 100;
 
 	//60% of chance to create a new node on the left
-	node->left = (rand() % 100 > 40)  ?  createRandomNode(currentDepth + 1, maxDepth) : NULL;
+	node->left = (rand() % 100 > 50)  ?  createRandomNode(currentDepth + 1, maxDepth) : NULL;
 
 	//60% of chance to create a new node on the right
-	node->right = (rand() % 100 > 40)  ? createRandomNode(currentDepth + 1, maxDepth) : NULL;
+	node->right = (rand() % 100 > 50)  ? createRandomNode(currentDepth + 1, maxDepth) : NULL;
 	return (node);
 }
 
@@ -63,7 +63,7 @@ struct s_node *createRandomBinaryTree(){
 	int	randomDepth;
 
 	//get Depth
-	randomDepth = (rand() % 6) + 2;
+	randomDepth = (rand() % 128) + 2;
 	return (createRandomNode(0, randomDepth));
 }
 

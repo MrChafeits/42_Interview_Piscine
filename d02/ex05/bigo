@@ -6,4 +6,4 @@ Performance:
 	Avg case   - O(log n)
 
 Space Complexity:
-	Worst case - O(1) total?
+	Worst case - O(1) total

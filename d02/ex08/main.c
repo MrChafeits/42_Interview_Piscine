@@ -4,18 +4,30 @@
 #include <stdlib.h> //malloc, free, exit...
 #include <sys/resource.h>
 #include <sys/stat.h>
+#include <time.h>
 
 #include "header.h"
 
 
 int main(void)
 {
+	int is_sorted = 0;
+	clock_t start = 0, end = 0;
+	double walltime = 0;
+
 	/*-------------------
 	launch your test here
 	--------------------*/
-
+	start = clock();
 	externalSort(SCOREFILE, SORTEDFILE, 8000);
-	printf("The file %s is%s sorted\n", SORTEDFILE, (fileIsSorted(SORTEDFILE)) ? "" : " NOT");
+	end = clock();
+	walltime = (double)(end - start)/CLOCKS_PER_SEC;
+	is_sorted = fileIsSorted(SORTEDFILE);
+	printf("clocks(%lu) clocks_per_sec(%f)\n",(end - start), walltime);
+	if (is_sorted)
+		fputs("The file " SORTEDFILE " is sorted\n", stdout);
+	else
+		fputs("The file " SORTEDFILE " is NOT sorted\n", stdout);
 
 	return (0);
 }

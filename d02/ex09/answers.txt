@@ -1,0 +1,24 @@
+1Q)	Given a large file with millions of data (name and phone number),
+	what is the most efficient way to sort the array?
+
+1A) [Merge sort]
+
+2Q)	Given an array of Ascii characters, what’s the most efficient way to
+	sort it?
+
+2A) [Counting sort]
+
+3Q)	Let’s say you have a very large array of strings and you just have
+	enough RAM to hold it. Which sort algorithm would you choose?
+
+3A) [External Merge sort]
+
+4Q)	Given an almost sorted array of 10k elements. Which sort algorithm
+	would you choose?
+
+4A) [Insertion sort]
+
+5Q)	Given an array which is almost sorted, and only one element is not
+	at his good place, Which sorting algorithm would you choose?
+
+4A) [Insertion sort]

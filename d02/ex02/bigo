@@ -1,9 +1,10 @@
 Where n is the number of elements in the array:
 
 Performance:
-	Worst case - O(n log n)?
-	Best case  - O(n log n)
-	Avg case   - O(n log n)
+	Worst case	- O(n log n)
+				| (O(n^2) avoided by using Hoare's Partition method)
+	Best case	- O(n log n)
+	Avg case	- O(n log n)
 
 Space Complexity:
-	Worst case - O(n) auxiliary
+	Worst case	- O(n) auxiliary

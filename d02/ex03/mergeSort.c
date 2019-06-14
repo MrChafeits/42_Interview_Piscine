@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdlib.h>
 #include "header.h"
 
@@ -10,20 +11,20 @@ struct s_player {
 };
 */
 
-static int arrLen(t_player **arr)
+static uint32_t arrLen(t_player **arr)
 {
-	register int i;
+	register uint32_t i;
 
 	for (i = 0; arr[i] != 0; ++i)
 		;
 	return i;
 }
 
-static void mush(t_player **arr, int l, int m, int r)
+static void mush(t_player **arr, uint32_t l, uint32_t m, uint32_t r)
 {
-	int lsize = m - l + 1;
-	int rsize = r - m;
-	int i,j,k;
+	uint32_t lsize = m - l + 1;
+	uint32_t rsize = r - m;
+	uint32_t i,j,k;
 	t_player *left[lsize], *right[rsize];
 
 	for (i = 0; i < lsize; i++)
@@ -54,9 +55,9 @@ static void mush(t_player **arr, int l, int m, int r)
 	}
 }
 
-static void mangle(t_player **arr, int l, int r)
+static void mangle(t_player **arr, uint32_t l, uint32_t r)
 {
-	int m;
+	uint32_t m;
 
 	m = l + (r - l) / 2;
 	if (l < r) {

@@ -13,10 +13,10 @@ int main(void)
 	int value;
 
 	srand((unsigned)time(NULL) + (unsigned)clock());
-	n = rand() % 128 + 8;
+	n = rand() % 90 + 10;
 	rocks = createRandomArray(n);
 	if (rand() % 2)
-		value = rand() % 32;
+		value = rand() % 30;
 	else
 		value = rocks[rand() % n];
 
@@ -26,7 +26,6 @@ int main(void)
 
 	printArray(rocks, n);
 	printf("Value %d at index %d\n", value, searchShifted(rocks, n, value));
-	printf("depth(%d)\n", depth);
 }
 
 

@@ -39,9 +39,8 @@ int playercmp(const void *p1, const void *p2)
 int main(void)
 {
 	struct s_player **players;
-	clock_t start, end;
 
-	int TESTSIZE = 10;
+	int TESTSIZE = 8;
 //if param == 0, the length of the list will be random between 1 and 1.000
 	players = genRandomPlayers(TESTSIZE);
 
@@ -52,23 +51,8 @@ int main(void)
 	puts("");
 	printf("is_sorted(%d)\n", is_sorted(players));
 	puts("doing the merge sort...");
-	start = clock();
 	players = mergeSort(players);
-	end = clock();
 	printf("is_sorted(%d)\n", is_sorted(players));
-	printf("cpu_ticks(%lu)\n", end - start);
-	printPlayers(players);
-	delet(players);
-	puts("");
-
-	players = genRandomPlayers(TESTSIZE);
-	printf("is_sorted(%d)\n", is_sorted(players));
-	puts("stdlib mergesort...");
-	start = clock();
-	mergesort(players, TESTSIZE, sizeof(t_player*), playercmp);
-	end = clock();
-	printf("is_sorted(%d)\n", is_sorted(players));
-	printf("cpu_ticks(%lu)\n", end - start);
 	printPlayers(players);
 	delet(players);
 
