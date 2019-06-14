@@ -5,9 +5,14 @@
 
 #include "header.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	int len = 5;
+	int len;
+
+	if (argc == 2)
+		len = (atoi(argv[1]) % 768);
+	else
+		len = 5;
 	int *arr = malloc(sizeof(int) * len);
 
 	for (int i = 0; i < len; i++){
@@ -16,10 +21,10 @@ int main(void)
 	/*-------------------
 	launch your test here
 	--------------------*/
-//	struct s_node *root;
+	struct s_node *root;
 
-//	root = createBST(arr, len);
-//	printBinaryTree(root);
+	root = createBST(arr, len);
+	printBinaryTree(root);
 
 	return (0);
 }

@@ -1,0 +1,9 @@
+Where n is the number of nodes in the n-ary tree:
+
+Performance:
+	O(n)
+
+Space Complexity:
+	O(n log n)
+
+iterative/recursive DFS
