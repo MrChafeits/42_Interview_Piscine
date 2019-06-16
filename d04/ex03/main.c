@@ -2,6 +2,7 @@
 #include <string.h> //memcpy, strlen, ...
 #include <unistd.h> //fork, write, sleep...
 #include <stdlib.h> //malloc, free, exit...
+#include <assert.h>
 
 #include "header.h"
 
@@ -24,8 +25,11 @@ int main(int ac, char **av)
 	launch your test here
 	--------------------*/
 	char *res;
+  int chkRes, ai = toInt(a), bi = toInt(b);
 
 	res = getXor(a, b);
+  chkRes = toInt(res);
+  assert(((ai ^ bi) & 0b111111) == chkRes);
 	printf("%s (%d)\n", res, toInt(res));
 
 	return (0);

@@ -16,16 +16,20 @@ t_node *newNode(int v)
 	new->value = v;
 	return new;
 }
+
 /* A function that constructs Balanced Binary Search Tree from a sorted array */
 t_node	*sortedArrayToBST(int *arr, int start, int end)
 {
+	int mid;
+	t_node *root;
+
 	if (start > end)
 		return NULL;
-	int mid = (start + end)/2;
-	t_node *root = newNode(arr[mid]);
-	fprintf(stderr, "[DBG: start(%d) mid(%d) end(%d)]\n", start, mid, end);
-	root->left =  sortedArrayToBST(arr, start, mid-1);
-	root->right = sortedArrayToBST(arr, mid+1, end);
+	mid = (start + end) / 2;
+	root = newNode(arr[mid]);
+	/* fprintf(stderr, "[DBG: start(%d) mid(%d) end(%d)]\n", start, mid, end); */
+	root->left =  sortedArrayToBST(arr, start, mid - 1);
+	root->right = sortedArrayToBST(arr, mid + 1, end);
 	return root;
 }
 

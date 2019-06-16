@@ -20,20 +20,23 @@ static uint32_t arrLen(t_player **arr)
 	return i;
 }
 
-static void mush(t_player **arr, uint32_t l, uint32_t m, uint32_t r)
+static void mush(t_player **arr, uint32_t lo, uint32_t mid, uint32_t hi)
 {
-	uint32_t lsize = m - l + 1;
-	uint32_t rsize = r - m;
+	uint32_t lsize = mid - lo + 1;
+	uint32_t rsize = hi - mid;
 	uint32_t i,j,k;
 	t_player *left[lsize], *right[rsize];
 
 	for (i = 0; i < lsize; i++)
-		left[i] = arr[l + i];
+		left[i] = arr[lo + i];
+
 	for (j = 0; j < rsize; j++)
-		right[j] = arr[m + 1 + j];
+		right[j] = arr[mid + 1 + j];
+
 	i = j = 0;
-	k = l;
+	k = lo;
 	while (i < lsize && j < rsize) {
+
 		if (left[i]->score >= right[j]->score) {
 			arr[k] = left[i];
 			i++;
@@ -43,11 +46,13 @@ static void mush(t_player **arr, uint32_t l, uint32_t m, uint32_t r)
 		}
 		k++;
 	}
+
 	while (i < lsize) {
 		arr[k] = left[i];
 		i++;
 		k++;
 	}
+
 	while (j < rsize) {
 		arr[k] = right[j];
 		j++;
@@ -55,15 +60,15 @@ static void mush(t_player **arr, uint32_t l, uint32_t m, uint32_t r)
 	}
 }
 
-static void mangle(t_player **arr, uint32_t l, uint32_t r)
+static void mangle(t_player **arr, uint32_t lo, uint32_t hi)
 {
-	uint32_t m;
+	uint32_t mid;
 
-	m = l + (r - l) / 2;
+	mid = lo + (hi - lo) / 2;
 	if (l < r) {
-		mangle(arr, l, m);
-		mangle(arr, m + 1, r);
-		mush(arr, l, m, r);
+		mangle(arr, lo, mid);
+		mangle(arr, mid + 1, hi);
+		mush(arr, lo, mid, hi);
 	}
 }
 

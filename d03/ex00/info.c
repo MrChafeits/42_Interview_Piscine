@@ -10,11 +10,13 @@ typedef struct s_info t_info;
 
 int getMin(t_node *root)
 {
-	if (!root)
+	int ret, left, right;
+
+	if (root == 0)
 		return INT_MAX;
-	int ret = root->value;
-	int left = getMin(root->left);
-	int right = getMin(root->right);
+	ret = root->value;
+	left = getMin(root->left);
+	right = getMin(root->right);
 	if (left < ret)
 		ret = left;
 	if (right < ret)
@@ -24,11 +26,13 @@ int getMin(t_node *root)
 
 int getMax(t_node *root)
 {
-	if (!root)
+	int ret, right, left;
+
+	if (root == 0)
 		return INT_MIN;
-	int ret = root->value;
-	int left = getMax(root->left);
-	int right = getMax(root->right);
+	ret = root->value;
+	left = getMax(root->left);
+	right = getMax(root->right);
 	if (left > ret)
 		ret = left;
 	if (right > ret)
@@ -38,20 +42,20 @@ int getMax(t_node *root)
 
 static int getElem(t_node *root)
 {
-	if (!root)
+	if (root == 0)
 		return 0;
 	return 1 + getElem(root->left) + getElem(root->right);
 }
 
 int isBST(t_node *root)
 {
-	if (!root)
+	if (root == 0)
 		return 1;
 	if (root->left && root->value < root->left->value)
 		return 0;
 	if (root->right && root->value > root->right->value)
 		return 0;
-	if (!isBST(root->left) || !isBST(root->right))
+	if (isBST(root->left) == 0 || isBST(root->right) == 0)
 		return 0;
 	return 1;
 }
@@ -66,17 +70,19 @@ static int max2(int a, int b)
 
 static int depth(t_node *root)
 {
-	if (!root)
+	if (root == 0)
 		return 0;
 	return 1 + max2(depth(root->left), depth(root->right));
 }
 
 int isBalanced(t_node *root)
 {
-	if (!root)
+	int left, right;
+
+	if (root == 0)
 		return 1;
-	int left = depth(root->left);
-	int right = depth(root->right);
+	left = depth(root->left);
+	right = depth(root->right);
 	return abs(left - right) <= 1 && isBalanced(root->left) && isBalanced(root->right);
 }
 

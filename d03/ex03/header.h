@@ -27,6 +27,6 @@ void printBinaryTree(struct s_node * t); //print a binary tree
 /*--------------------------------
   &  your own other function
   --------------------------------*/
-
+size_t lswaps,rswaps,ack;
 
 #endif

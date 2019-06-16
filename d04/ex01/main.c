@@ -10,8 +10,9 @@ int main(int ac, char **av)
 	char *a;
 	char *b;
 
+  printf("argc(%d)\n", ac);
 	if (ac == 4
-		&& (strcmp(av[2], "&") == 0 || strcmp(av[2], "|"))
+		&& (strcmp(av[2], "&") == 0 || strcmp(av[2], "|") == 0)
 		&& checkBinary(av[1]) && checkBinary(av[3])) {
 		a = av[1];
 		b = av[3];

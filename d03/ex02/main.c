@@ -3,6 +3,7 @@
 #include <unistd.h> //fork, write, sleep...
 #include <stdlib.h> //malloc, free, exit...
 #include <time.h>
+#include <assert.h>
 
 #include "header.h"
 
@@ -14,13 +15,31 @@ int main(void)
 	root = getTreeOfLife();
 	node = NULL;
 
-       	/*-------------------
-        launch your test here
-        --------------------*/
+/*-------------------
+launch your test here
+--------------------*/
+	clock_t start, stop;
 
+	start = clock();
 	node = findParent(root, "Dinosauria", "Homo sapiens");
-	if (node)
-		printf("%s\n", node->name);
+	stop = clock();
+	assert(node != NULL && strcmp("Amniota", node->name) == 0);
+	printf("findParent(root, \"Dinosauria\", \"Homo sapiens\") == node->name(%s)\n", node->name);
+	fprintf(stderr, "[DBG: clocks(%lu) appprox_time(%f)]\n\n",stop-start,(double)(stop-start)/CLOCKS_PER_SEC);
+
+	start = clock();
+	node = findParent(root, "Lynx", "Marsupialia");
+	stop = clock();
+	assert(node != NULL && strcmp("Mammalia", node->name) == 0);
+	printf("findParent(root, \"Lynx\", \"Marsupialia\") == node->name(%s)\n", node->name);
+	fprintf(stderr, "[DBG: clocks(%lu) appprox_time(%f)]\n\n",stop-start,(double)(stop-start)/CLOCKS_PER_SEC);
+
+	start = clock();
+	node = findParent(root, "Dinosauria", "I do not exist !");
+	stop = clock();
+	assert(node == NULL);
+	printf("findParent(root, \"Dinosauria\", \"I do not exist !\") == NULL\n");
+	fprintf(stderr, "[DBG: clocks(%lu) appprox_time(%f)]\n",stop-start,(double)(stop-start)/CLOCKS_PER_SEC);
 
 	return (0);
 }

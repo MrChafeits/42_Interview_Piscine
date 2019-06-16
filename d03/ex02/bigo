@@ -6,4 +6,5 @@ Performance:
 Space Complexity:
 	O(n log n)
 
-iterative/recursive DFS
+Method:
+	iterative/recursive DFS

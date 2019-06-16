@@ -8,18 +8,18 @@
 
 int main(int ac, char **av)
 {
+	char *wurd;
 	struct s_trie *trie;
 
 	trie = NULL;
 	
-	if (ac >= 2){
-		/*-------------------
-		  launch your test here
-		  --------------------*/
-		// if (!(trie = createTrie(g_dict)))
-		// 	return (-1);
-		// printf("%s\n", understandAll(av[1], trie));
-	}else{
+	if (ac >= 2) {
+		/* launch your test here */ 
+		if (!(trie = createTrie(g_dict)))
+			return (-1);
+		wurd = strdup(av[1]);
+		printf("%s\n", understandAll(wurd, trie));
+	} else {
 		printf("Usage: %s 'wo?d'\n", av[0]);
 	}
 

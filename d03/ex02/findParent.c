@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include "header.h"
 
 typedef struct s_node t_node;
@@ -16,6 +13,7 @@ struct s_node {
 static int search(t_node *root, t_node **fnd, char *one, char *two)
 {
 	int cnt, i;
+
 	if (root == 0)
 		return 0;
 	cnt = 0;

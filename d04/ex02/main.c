@@ -2,6 +2,7 @@
 #include <string.h> //memcpy, strlen, ...
 #include <unistd.h> //fork, write, sleep...
 #include <stdlib.h> //malloc, free, exit...
+#include <assert.h>
 
 #include "header.h"
 
@@ -24,11 +25,17 @@ int main(int ac, char **av)
 	launch your test here
 	--------------------*/
 	char *res;
+  int chkBin = toInt(bin), chkRes = 0;
 
-	if (strcmp(av[2], "<<") == 0)
+	if (strcmp(av[2], "<<") == 0) {
 		res = leftShift(bin, k);
-	else
+    chkRes = toInt(res);
+    assert(((chkBin << k) & 0b111111) == chkRes);
+	} else {
 		res = rightShift(bin, k);
+    chkRes = toInt(res);
+    assert(((chkBin >> k) & 0b111111) == chkRes);
+  }
 	printf("%s (%d)\n", res, toInt(res));
 
 	return (0);
