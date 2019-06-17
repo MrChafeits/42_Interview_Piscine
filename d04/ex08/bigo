@@ -1,0 +1,8 @@
+Where n is the number of set bits:
+
+Performance:
+	O(1)
+
+Space Complexity:
+	O(1) total
+	O(n) auxiliary due to recursive bitwise addition function

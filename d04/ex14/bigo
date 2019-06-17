@@ -1,0 +1,8 @@
+Where n is the position of the Most Significant Bit:
+
+Performance:
+	O(n)
+
+Space Complexity:
+	O(1) total
+	O(n) auxiliary for recursive stack frames
