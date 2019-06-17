@@ -19,7 +19,7 @@ void getNot(char *a)
   }
   a[i] = 0;
   for (i = 0; a[i] != 0; i++) {
-    a[i] = '0' + !(a[i] - '0');
+    a[i] = '0' + !(a[i] ^ '0');
   }
   a[i] = 0;
 }
@@ -30,9 +30,9 @@ char *getAnd(char *a, char *b)
   int i;
 
   if (!a || !b) {
-    if (!a && b)
+    if (a)
       return a;
-    else if (a && !b)
+    else if (b)
       return b;
     else
       return 0;
@@ -72,6 +72,5 @@ int toInt(char *bits)
 {
   if (!bits)
     return 0;
-  char *endptr = strchr(bits, 0);
-  return strtol(bits, &endptr, 2);
+  return strtol(bits, 0, 2);
 }

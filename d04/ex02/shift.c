@@ -54,6 +54,5 @@ int toInt(char *bits)
 {
   if (!bits)
     return 0;
-  char *endptr = strchr(bits, 0);
-  return strtol(bits, &endptr, 2);
+  return strtol(bits, 0, 2);
 }

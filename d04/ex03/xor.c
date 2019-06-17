@@ -9,10 +9,10 @@ char *getXor(char *a, char *b)
   int i;
 
   if (!a || !b) {
-    if (!a && b)
-      return b;
-    else if (a && !b)
+    if (a)
       return a;
+    else if (b)
+      return b;
     else
       return 0;
   }
@@ -26,6 +26,5 @@ int toInt(char *bits)
 {
   if (!bits)
     return 0;
-  char *endptr = strchr(bits, 0);
-  return strtol(bits, &endptr, 2);
+  return strtol(bits, 0, 2);
 }
