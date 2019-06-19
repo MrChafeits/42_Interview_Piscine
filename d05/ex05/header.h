@@ -1,5 +1,6 @@
 #ifndef HEADER_H
 # define HEADER_H
+#include <sys/types.h>
 
 /*--------------------------------
   !! required structure
@@ -28,7 +29,7 @@ struct s_dict {
   int           capacity; //the capacity of the array 'items'
 };
 
-struct s_dict *dictInit(int capacity);
+struct s_dict *dictInit(size_t capacity);
 int dictInsert(struct s_dict *dict, char *key, int value); //return -1 if fail
 int dictSearch(struct s_dict *dict, char *key);
 

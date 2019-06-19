@@ -1,0 +1,7 @@
+Where n is the length of the input string:
+
+Performance:
+	O(2^n)
+
+Space Complexity:
+	O(n!)

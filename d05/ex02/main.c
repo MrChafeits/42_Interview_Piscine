@@ -17,7 +17,10 @@ int main(int ac, char **av)
 	/*-------------------
 	launch your test here
 	--------------------*/
-        // printf("%d : %.2f\n", pizzaSize, optimizedBestPrice(pizzaSize, pricesCont->items));
+        double best = optimizedBestPrice(pizzaSize, pricesCont->items);
+        printf("%d : %.2f\n", pizzaSize, best);
+        free(pricesCont->items);
+        free(pricesCont);
 
 	return (0);
 }
@@ -42,7 +45,7 @@ char    *readFile(void)
         fseek(fp, 0L, SEEK_END);
         size = ftell(fp);
         rewind(fp);
-        if (NULL == (fcontent = malloc(sizeof(char) * (size + 1))))
+        if (NULL == (fcontent = calloc(sizeof(char), (size + 1))))
                 return (NULL);
         fread(fcontent, 1, size, fp);
         fclose(fp);
@@ -81,7 +84,7 @@ char    **split(char *str, char *delimiter){
         if (len_substring > 0){
                 count += 1;
         }
-        if (NULL == (tab = malloc(sizeof(char *) * (count + 1))))
+        if (NULL == (tab = calloc(sizeof(char *), (count + 1))))
                 return (NULL);
         tab[(a = 0)] = NULL;
         len_substring = 0;
@@ -116,13 +119,13 @@ struct s_prices *readList()
 
         dprintf(STDOUT_FILENO, "(INFO) Loading the file... ");
         if (NULL == (file = readFile()))
-                readList_leave();       
+                readList_leave();
         splitted = split(file, "\n");
         for (len = 0; splitted[len]; len++)
                 ;
-        list = malloc(sizeof(struct s_prices));
+        list = calloc(1, sizeof(struct s_prices));
         list->length = len+1;
-        if (!(list->items = malloc(sizeof(double) * (len+1))))
+        if (!(list->items = calloc(sizeof(double), (len+1))))
                 readList_leave();
         len = 1;
 	list->items[0] = 0;
@@ -137,7 +140,13 @@ struct s_prices *readList()
                 }
                 list->items[len] = atof(secondSplit[1]);
                 len += 1;
+                for (int k = 0; secondSplit[k]; k++)
+                  free(secondSplit[k]);
+                free(secondSplit);
+                free(splitted[i]);
         }
+        free(splitted);
+        free(file);
         printf("finish!\n");
         return (list);
 }

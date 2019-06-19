@@ -17,7 +17,10 @@ int main(int ac, char **av)
 	/*-------------------
 	launch your test here
 	--------------------*/
-        // printf("%d : %.2f\n", pizzaSize, bestPrice(pizzaSize, pricesCont->items));
+        double best = bestPrice(pizzaSize, pricesCont->items);
+        fprintf(stdout, "%d : %.2f\n", pizzaSize, best);
+        free(pricesCont->items);
+        free(pricesCont);
 
 	return (0);
 }
@@ -42,7 +45,7 @@ char    *readFile(void)
         fseek(fp, 0L, SEEK_END);
         size = ftell(fp);
         rewind(fp);
-        if (NULL == (fcontent = malloc(sizeof(char) * (size + 1))))
+        if (NULL == (fcontent = calloc(size+1, sizeof(char))))
                 return (NULL);
         fread(fcontent, 1, size, fp);
         fclose(fp);
@@ -50,7 +53,7 @@ char    *readFile(void)
 }
 
 void    readList_leave(void){
-        dprintf(STDERR_FILENO, "failed to load the file.\n");
+        fprintf(stderr, "failed to load the file.\n");
         exit(0);
 }
 
@@ -81,7 +84,7 @@ char    **split(char *str, char *delimiter){
         if (len_substring > 0){
                 count += 1;
         }
-        if (NULL == (tab = malloc(sizeof(char *) * (count + 1))))
+        if (NULL == (tab = calloc(count+1, sizeof(char *))))
                 return (NULL);
         tab[(a = 0)] = NULL;
         len_substring = 0;
@@ -112,17 +115,17 @@ struct s_prices *readList()
         char *file;
         char **splitted;
         char **secondSplit;
-        int len;
+        int len, j;
 
         dprintf(STDOUT_FILENO, "(INFO) Loading the file... ");
         if (NULL == (file = readFile()))
-                readList_leave();       
+                readList_leave();
         splitted = split(file, "\n");
         for (len = 0; splitted[len]; len++)
                 ;
-        list = malloc(sizeof(struct s_prices));
+        list = calloc(1, sizeof(struct s_prices));
         list->length = len+1;
-        if (!(list->items = malloc(sizeof(double) * (len+1))))
+        if (!(list->items = calloc(len+1, sizeof(double))))
                 readList_leave();
         len = 1;
 	list->items[0] = 0;
@@ -132,12 +135,18 @@ struct s_prices *readList()
                 if (!(secondSplit && secondSplit[0] && secondSplit[1] && !secondSplit[2]))
                         continue;
                 if (len != atoi(secondSplit[0])){
-                        dprintf(STDERR_FILENO, "error in the parsing!\n");
+                        fprintf(stderr, "error in the parsing!\n");
                         exit(0);
                 }
                 list->items[len] = atof(secondSplit[1]);
                 len += 1;
+                for (j = 0; secondSplit[j]; j++)
+                  free(secondSplit[j]);
+                free(secondSplit);
+                free(splitted[i]);
         }
-        printf("finish!\n");
+        free(splitted);
+        free(file);
+        fprintf(stdout, "finish!\n");
         return (list);
 }

@@ -1,0 +1,7 @@
+Where n is the size of the pizza:
+
+Performance:
+	O(2^n)
+
+Space Complexity:
+	O(n) total

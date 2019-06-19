@@ -2,6 +2,7 @@
 #include <string.h> //memcpy, strlen, ...
 #include <unistd.h> //fork, write, sleep...
 #include <stdlib.h> //malloc, free, exit...
+#include <time.h>
 #include <math.h>
 
 #include "header.h"
@@ -12,12 +13,19 @@ int main(int ac, char **av)
 
 	if (ac >= 2){
 		word = av[1];
-	}
+	} else {
+    printf("Usage: %s [word]\n", *av);
+    return 1;
+  }
 
 	/*-------------------
 	launch your test here
 	--------------------*/
-	// printUniquePermutations(word);
+  clock_t start, stop;
+  start = clock();
+	printUniquePermutations(word);
+  stop = clock();
+  fprintf(stderr, "clocks(%lu) approx_time(%f)\n", stop-start, (double)(stop-start)/CLOCKS_PER_SEC);
 
 	return (0);
 }
@@ -27,14 +35,16 @@ int main(int ac, char **av)
 // Function used for the test
 // Don't go further :)
 
+#define FNV_OFFSET 14695981039346656037ULL
+#define FNV_PRIME 1099511628211ULL
 size_t	hash(char *input){
-	size_t prod;
+  register size_t i;
 
-	prod = 0;
-	for (int i = 0; input[i]; i++){
-		prod = prod * 6449 + input[i];
+	for (i = FNV_OFFSET; *input; input++){
+    i *= FNV_PRIME;
+    i ^= *input;
 	}
-	return (prod);
+	return (i);
 }
 
 int	dictInsert(struct s_dict *dict, char *key, int value)
@@ -55,7 +65,7 @@ int	dictInsert(struct s_dict *dict, char *key, int value)
 		tmpBefore = tmp;
 		tmp = tmp->next;
 	}
-	if (NULL == (tmp = malloc(sizeof(struct s_item))))
+	if (NULL == (tmp = calloc(1, sizeof(struct s_item))))
 		return (0);
 	if (tmpBefore != NULL)
 		tmpBefore->next = tmp;
@@ -67,23 +77,18 @@ int	dictInsert(struct s_dict *dict, char *key, int value)
 	return (1);
 }
 
-struct s_dict *dictInit(int capacity)
+struct s_dict *dictInit(size_t capacity)
 {
 	struct s_dict *dict;
 
-	if (NULL == (dict = malloc(sizeof(struct s_dict))))
+	if (NULL == (dict = calloc(1, sizeof(struct s_dict))))
 		return (NULL);
 
 	dict->capacity = capacity;
 
 	//calculate len
-	if (NULL == (dict->items = malloc(sizeof(struct s_item *) * (dict->capacity))))
+	if (NULL == (dict->items = calloc(sizeof(struct s_item *) , (dict->capacity))))
 		return (NULL);
-
-	//clearing the hashdict
-	for (int i = 0; i < dict->capacity; i++){
-		dict->items[i] = NULL;
-	}
 
 	return (dict);
 }

@@ -1,0 +1,7 @@
+Where n is the length of the input string:
+
+Performance:
+	O(n!)
+
+Space Complexity:
+	O(1) Total O(n!) auxiliary

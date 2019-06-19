@@ -9,6 +9,6 @@ if len(sys.argv) == 2:
 		path = filename[:filename.rindex('/')] + '/'
 	except:
 		pass
-	os.system('gcc -Wall -Werror -Wextra -o ' + filename.split('.')[0] + ' ' + path + 'main.c ' + filename)
+	os.system('gcc -Wall -Werror -Wextra -o ' + filename.split('.')[0] + '.out ' + path + 'main.c ' + filename)
 else:
 	print 'Usage: compile /path/to/exname.c'

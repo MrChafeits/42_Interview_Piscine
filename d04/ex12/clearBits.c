@@ -37,5 +37,8 @@ static unsigned unsetBitsRange(unsigned n, unsigned l, unsigned r)
 
 unsigned clearBits(unsigned parkingRow, int n)
 {
-  return (parkingRow & unsetBitsRange(~0, Add(n, 1), 0));
+  if (1)
+    return (~0 << n) & parkingRow;
+  else
+    return (parkingRow & unsetBitsRange(~0, Add(n, 1), 0));
 }

@@ -15,8 +15,8 @@ int main(void)
 	/*-------------------
 	launch your test here
 	--------------------*/
-	// sinkIsland(map, 1, 1);
-	// printMap(map);
+	sinkIsland(map, 1, 1);
+	printMap(map);
 
 	return (0);
 }
@@ -52,7 +52,7 @@ char    *readFile(char *filename)
         fseek(fp, 0L, SEEK_END);
         size = ftell(fp);
         rewind(fp);
-        if (NULL == (fcontent = malloc(sizeof(char) * (size + 1))))
+        if (NULL == (fcontent = calloc(sizeof(char) , (size + 1))))
                 return (NULL);
         fread(fcontent, 1, size, fp);
         fclose(fp);
@@ -91,7 +91,7 @@ char    **split(char *str, char *delimiter){
         if (len_substring > 0){
                 count += 1;
         }
-        if (NULL == (tab = malloc(sizeof(char *) * (count + 1))))
+        if (NULL == (tab = calloc(sizeof(char *) , (count + 1))))
                 return (NULL);
         tab[(a = 0)] = NULL;
         len_substring = 0;
@@ -131,7 +131,7 @@ int **readMap(char *filename)
         splitted = split(file, "\n");
         for (len = 0; splitted[len]; len++)
                 ;
-        if (!(map = malloc(sizeof(int *) * (len+1))))
+        if (!(map = calloc(sizeof(int *) , (len+1))))
                 readMap_leave();
         len = 0;
         for (int i = 0; splitted[i]; i++)
@@ -139,7 +139,7 @@ int **readMap(char *filename)
                 secondSplit = split(splitted[i], " ");
 		for (len2 = 0; secondSplit[len2]; len2++)
 			;
-		map[len] = malloc(sizeof(int) * (len2 + 1));
+		map[len] = calloc(sizeof(int) , (len2 + 1));
 		for (int a = 0; a < len2; a++){
 			map[len][a] = atoi(secondSplit[a]);
 		}
