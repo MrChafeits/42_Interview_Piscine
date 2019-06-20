@@ -9,7 +9,7 @@
 /*--------------------------------
   :) function you must implement
   --------------------------------*/
-double probaDistance(double dist, int *locations, int n);
+double probaDistance(int dist, int *locations, int n);
 
 /*--------------------------------
   ?? test function used in main 

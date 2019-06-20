@@ -1,0 +1,7 @@
+Where n is the number of elements in the array:
+
+Performance:
+	O(n^2)?
+
+Space Complexity:
+	O(n)

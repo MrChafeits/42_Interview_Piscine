@@ -2,6 +2,7 @@
 #include <string.h> //memcpy, strlen, ...
 #include <unistd.h> //fork, write, sleep...
 #include <stdlib.h> //malloc, free, exit...
+#include <time.h>
 
 #include "header.h"
 
@@ -30,9 +31,13 @@ int main(int ac, char **av)
 	/*-------------------
 	launch your test here
 	--------------------*/
+  clock_t start, stop;
 
-	// prob = knightOut(board, n);
-	// printf("Probability knight out in %d move(s) : %.10f\n", n, prob);
+  start = clock();
+	prob = knightOut(board, n);
+  stop = clock();
+	printf("Probability knight out in %d move(s) : %.10f\n", n, prob);
+  printf("clocks(%lu) approx_time(%f)\n", stop-start, (double)(stop-start)/CLOCKS_PER_SEC);
 
 	return (0);
 }

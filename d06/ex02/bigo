@@ -1,0 +1,7 @@
+Where n is the number of games:
+
+Time Complexity:
+	O(n)
+
+Space Complexity:
+	O(1) Total, O(n) Auxiliary

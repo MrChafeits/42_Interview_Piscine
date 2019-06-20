@@ -1,5 +1,6 @@
 #ifndef HEADER_H
 # define HEADER_H
+#include <stdint.h>
 
 /*--------------------------------
   !! required structure
