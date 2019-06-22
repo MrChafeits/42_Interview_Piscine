@@ -1,0 +1,11 @@
+Where n is the number of elements in the array:
+
+Time Complexity:
+	Worst-case	- O(n log n)
+	Best-case	- O(n log n) distinct keys
+				- O(n) equal keys
+	Avg-case	- O(n log n)
+
+Space Complexity:
+	Worst-casw	- O(n) Total
+				- O(1) Auxiliary

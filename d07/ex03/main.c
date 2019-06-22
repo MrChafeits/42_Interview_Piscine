@@ -24,9 +24,9 @@ int main(int ac, char **av)
 	/*-------------------
 	launch your test here
 	--------------------*/
-	// sellers = closestSellers(graph, place);
+	sellers = closestSellers(graph, place);
 
-	// printSellers(sellers);
+	printSellers(sellers);
 
 	return (0);
 }
@@ -52,7 +52,7 @@ void printSellers(struct s_sellers *sellers)
 void enqueue(struct s_queue *queue, struct s_node *place) {
 	struct s_queueItem* elem;
 
-	if (!(elem = (struct s_queueItem *)malloc(sizeof(struct s_queueItem))))
+	if (!(elem = (struct s_queueItem *)calloc(1,sizeof(struct s_queueItem))))
 		return;
 	elem->place = place;
 	elem->next = NULL;
@@ -96,7 +96,7 @@ struct s_queue *queueInit(void)
 {
 	struct s_queue *queue;
 
-	queue = malloc(sizeof(struct s_queue));
+	queue = calloc(1,sizeof(struct s_queue));
 	if (!queue)
 		return (NULL);
 	queue->first = NULL;
@@ -112,7 +112,7 @@ struct s_node **getNetwork(FILE *f) {
 	struct s_node	**connectedPlaces;
 
 	fscanf(f, "%d\n", &size);
-	if (!(connectedPlaces = (struct s_node **)malloc(sizeof(struct s_node *) * (size + 1))))
+	if (!(connectedPlaces = (struct s_node **)calloc(sizeof(struct s_node *) , (size + 1))))
 		return (NULL);
 	i = 0;
 	while (i < size && fscanf(f, "%ld\n", &id2) > 0) {
@@ -144,19 +144,19 @@ struct s_graph *getSquares(char *filename) {
 	int				i, size;
 	char			*name = NULL;
 
-	if (!(graph = (struct s_graph *)malloc(sizeof(struct s_graph))))
+	if (!(graph = (struct s_graph *)calloc(1,sizeof(struct s_graph))))
 		return (NULL);
 	if (!(f = fopen(filename, "r"))) {
 		printf("Couldn't find %s\n", filename);
 		exit(1);
 	}
 	fscanf(f, "%d\n", &size);
-	if (!(graph->places = (struct s_node **)malloc(sizeof(struct s_node *) * (size + 1))))
+	if (!(graph->places = (struct s_node **)calloc(sizeof(struct s_node *) , (size + 1))))
 		return (NULL);
 	i = 0;
 	while (i < size && (linelen = getline(&name, &linecap, f)) > 0) {
 		name[linelen - 1] = 0;
-		if (!(graph->places[i] = (struct s_node *)malloc((sizeof(struct s_node)))))
+		if (!(graph->places[i] = (struct s_node *)calloc(1, (sizeof(struct s_node)))))
 			return (NULL);
 		graph->places[i]->name = name;
 		graph->places[i]->visited = 0;

@@ -5,6 +5,7 @@
   !! required structure
   --------------------------------*/
 
+typedef struct s_node t_node;
 struct s_node {
     char          *name;
     int           population;
@@ -12,6 +13,7 @@ struct s_node {
     struct s_node **connectedPlaces;
 };
 
+typedef struct s_graph t_graph;
 struct s_graph {
     struct s_node **places;
 };
@@ -29,11 +31,13 @@ float maxTraffic(struct s_graph *parisPlaces, char *eventHere);
 
 //QUEUE
 
+typedef struct s_queueItem t_queueItem;
 struct s_queueItem {
   void *item;
   struct s_queueItem *next;
 };
 
+typedef struct s_queue t_queue;
 struct s_queue {
   struct s_queueItem *first;
   struct s_queueItem *last;

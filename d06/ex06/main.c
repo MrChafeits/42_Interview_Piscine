@@ -20,8 +20,8 @@ int main(int ac, char **av)
 	launch your test here
 	--------------------*/
 
-	// printf("Distance : Edges\n");
-	// printMST(graph);
+	printf("Distance : Edges\n");
+	printMST(graph);
 
 	return (0);
 }
@@ -37,11 +37,11 @@ struct s_edge **getNetwork(FILE *f) {
 	struct s_edge	**edges;
 
 	fscanf(f, "%d\n", &size);
-	if (!(edges = (struct s_edge **)malloc(sizeof(struct s_edge *) * (size + 1))))
+	if (!(edges = (struct s_edge **)calloc(sizeof(struct s_edge *) , (size + 1))))
 		return (NULL);
 	i = 0;
 	while (i < size && fscanf(f, "%ld %d\n", &id2, &dist) > 0) {
-		if (!(edges[i] = (struct s_edge *)malloc(sizeof(struct s_edge))))
+      if (!(edges[i] = (struct s_edge *)calloc(1, sizeof(struct s_edge))))
 			return (NULL);
 		edges[i]->dest = (struct s_node *)(id2 + 1);
 		edges[i]->dist = dist;
@@ -72,19 +72,19 @@ struct s_graph *getGraph(char *filename) {
 	int				i, size;
 	char			*name = NULL;
 
-	if (!(graph = (struct s_graph *)malloc(sizeof(struct s_graph))))
+	if (!(graph = (struct s_graph *)calloc(1, sizeof(struct s_graph))))
 		return (NULL);
 	if (!(f = fopen(filename, "r"))) {
 		printf("Couldn't find %s\n", filename);
 		exit(1);
 	}
 	fscanf(f, "%d\n", &size);
-	if (!(graph->nodes = (struct s_node **)malloc(sizeof(struct s_node *) * (size + 1))))
+	if (!(graph->nodes = (struct s_node **)calloc(sizeof(struct s_node *) , (size + 1))))
 		return (NULL);
 	i = 0;
 	while (i < size && (linelen = getline(&name, &linecap, f)) > 0) {
 		name[linelen - 1] = 0;
-		if (!(graph->nodes[i] = (struct s_node *)malloc((sizeof(struct s_node)))))
+		if (!(graph->nodes[i] = (struct s_node *)calloc(1,(sizeof(struct s_node)))))
 			return (NULL);
 		graph->nodes[i]->id = i;
 		graph->nodes[i]->name = name;

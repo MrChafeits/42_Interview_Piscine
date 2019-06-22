@@ -1,0 +1,8 @@
+Where n is the number of stories in the building:
+
+Time Complexity:
+	O(n)
+
+Space Complexity:
+	Total		- O(1)
+	Auxiliary	- O(n)

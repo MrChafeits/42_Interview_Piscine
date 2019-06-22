@@ -2,25 +2,55 @@
 #include <string.h> //memcpy, strlen, ...
 #include <unistd.h> //fork, write, sleep...
 #include <stdlib.h> //malloc, free, exit...
+#include <time.h>
 
 #include "header.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	struct s_graph *graph;
+  char *filename, *start;
+  int fw;
+  float res;
 
-	graph = getSquares("squares.txt");
+  if (argc == 2)
+      filename = argv[1];
+  else if (argc == 1)
+      filename = "squares.txt";
+  else {
+      fprintf(stderr, "Usage: %s [optional filename]\n", *argv);
+      return 1;
+  }
 
 	/*-------------------
 	launch your test here
 	--------------------*/
+  graph = getSquares(filename);
+  if (argc == 1) {
+      res = maxTraffic(graph, "Place du Louvre");
+      printf("%20s : %.1f\n%22s(497301.2)\n", "Place du Louvre", res,"");
 
-	// printf("%s : %.1f\n", "Place du Louvre", maxTraffic(graph, "Place du Louvre"));
-	// printf("%s : %.1f\n", "Place Pigalle", maxTraffic(graph, "Place Pigalle"));
-	// printf("%s : %.1f\n", "Place des Invalides", maxTraffic(graph, "Place des Invalides"));
-	// printf("%s : %.1f\n", "I do not exist", maxTraffic(graph, "I do not exist"));
+      res = maxTraffic(graph, "Place Pigalle");
+      printf("%20s : %.1f\n%22s(449797.3)\n", "Place Pigalle", res, "");
 
-	return (0);
+      res = maxTraffic(graph, "Place des Invalides");
+      printf("%20s : %.1f\n%22s(512979.1)\n", "Place des Invalides", res, "");
+
+      res = maxTraffic(graph, "I do not exist");
+      printf("%s : %.1f\n%22s(-1.0)\n", "I do not exist", res, "");
+  } else {
+      start = "Node 3";
+      fw = strlen(start);
+      res = maxTraffic(graph, start);
+      if (strcmp(filename, "example1.txt") == 0)
+          printf("%-*s : %.1f\n%*s(30.0)\n", fw, start, res, fw+2, "");
+      else if (strcmp(filename, "example2.txt") == 0)
+          printf("%-*s : %.1f\n%*s(20.0)\n", fw, start, res, fw+2, "");
+      else
+          printf("%-*s : %.1f\n", fw, start, res);
+  }
+
+  return (0);
 }
 
 
@@ -33,7 +63,7 @@ int main(void)
 void enqueue(struct s_queue *queue, void *item) {
 	struct s_queueItem* elem;
 
-	if (!(elem = (struct s_queueItem *)malloc(sizeof(struct s_queueItem))))
+	if (!(elem = (struct s_queueItem *)calloc(1, sizeof(struct s_queueItem))))
 		return;
 	elem->item = item;
 	elem->next = NULL;
@@ -66,7 +96,7 @@ struct s_queue *queueInit(void)
 {
 	struct s_queue *queue;
 
-	queue = malloc(sizeof(struct s_queue));
+	queue = calloc(1, sizeof(struct s_queue));
 	if (!queue)
 		return (NULL);
 	queue->first = NULL;
@@ -82,7 +112,7 @@ struct s_node **getNetwork(FILE *f) {
 	struct s_node	**connectedPlaces;
 
 	fscanf(f, "%d\n", &size);
-	if (!(connectedPlaces = (struct s_node **)malloc(sizeof(struct s_node *) * (size + 1))))
+	if (!(connectedPlaces = calloc(sizeof(struct s_node *) , (size + 1))))
 		return (NULL);
 	i = 0;
 	while (i < size && fscanf(f, "%ld\n", &id2) > 0) {
@@ -114,19 +144,19 @@ struct s_graph *getSquares(char *filename) {
 	int				i, size;
 	char			*name = NULL;
 
-	if (!(graph = (struct s_graph *)malloc(sizeof(struct s_graph))))
+	if (!(graph = calloc(1, sizeof(struct s_graph))))
 		return (NULL);
 	if (!(f = fopen(filename, "r"))) {
 		printf("Couldn't find %s\n", filename);
 		exit(1);
 	}
 	fscanf(f, "%d\n", &size);
-	if (!(graph->places = (struct s_node **)malloc(sizeof(struct s_node *) * (size + 1))))
+	if (!(graph->places = calloc(sizeof(struct s_node *) , (size + 1))))
 		return (NULL);
 	i = 0;
 	while (i < size && (linelen = getline(&name, &linecap, f)) > 0) {
 		name[linelen - 1] = 0;
-		if (!(graph->places[i] = (struct s_node *)malloc((sizeof(struct s_node)))))
+		if (!(graph->places[i] = calloc(1, (sizeof(struct s_node)))))
 			return (NULL);
 		graph->places[i]->name = name;
 		graph->places[i]->visited = 0;

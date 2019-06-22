@@ -22,6 +22,6 @@ struct s_art **getArts(void);
 /*--------------------------------
   &  your own other function
   --------------------------------*/
-
+int artcmp(const void *p1, const void *p2);
 
 #endif

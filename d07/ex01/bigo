@@ -1,4 +1,4 @@
-Where n is the number of moves:
+Where n is the number of elements in the array:
 
 Time Complexity:
 	O(n)
